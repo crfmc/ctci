@@ -10,7 +10,7 @@
 /**
  * Notes:
 */
-const Problem5 = (s) => {
+const Problem6 = (s) => {
   let char = 0;
   let counts = new Map();
 
@@ -41,10 +41,10 @@ const Problem5 = (s) => {
 // Tests for Problem
 console.log("Problem 5 Tests running... \n");
 
-console.assert( Problem5("aabcccccaaa") === "a2b1c5a3", "ex1");
-// console.assert( Problem5("abcd") === "abcd", "compressed is longer");
-// console.assert( Problem5("") === "", "empty string");
-// console.assert( Problem5("a") === "a", "single letter, compress longer");
+console.assert( Problem6("aabcccccaaa") === "a2b1c5a3", "ex1");
+console.assert( Problem6("abcd") === "abcd", "compressed is longer");
+console.assert( Problem6("") === "", "empty string");
+console.assert( Problem6("a") === "a", "single letter, compress longer");
 
 
 module.exports;

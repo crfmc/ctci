@@ -44,6 +44,12 @@ class Node {
 
     p1.next = p2;
   }
+
+  // [fromArray] returns a linked list given an array of values recursively
+  static fromArray(a) {
+    if (a.length === 0) return null
+    return new Node(a[0], Node.fromArray(a.slice(1)))
+  }
 }
 
 // A node representing a node in a linked list object

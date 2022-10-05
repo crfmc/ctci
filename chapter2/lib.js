@@ -9,6 +9,23 @@ class Node {
     this.val = val;
     this.next = next;
   }
+  nodeAt(i) {
+
+    let j = 1;
+    let n = this;
+
+    while (j <= i) {
+      try {
+        n = n.next;
+      }
+      catch (e) {
+        throw RangeError("Index provided not in range of Linked List");
+      }
+      j++;
+    }
+
+    return n
+  }
   print() {
     let s = "" + this.val;
     let n = this.next;

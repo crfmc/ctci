@@ -1,86 +1,173 @@
+const { Node, LLNode, LL } = require('./lib');
 /**
  * Question:
- *  - Given two strings, write a method to decide if one is a permutation of the other.
- *  - Must use the same letters the same number of times
- *  
+ *  - Implement an algorithm to find the kth to last element of a singly linked list.
  */
 
 /**
- * discounts:
- *  - strings must be the same length
- *  - Must have the same characters
+ * Notes:
  * 
- * BCR:
- *  - Adding everything into a hashmap could help to check is
- *    each value in s2 is in s1
+ * Best conceivable runtime, probably O(n)
  * 
  *  
  */
-const Problem2 = (s1, s2) => {
-  if (s1.length !== s2.length) return false
+const Problem2 = (n, k) => {
+  let map = new Map();
+  let i = 0;
 
-  // Throw it in a hashmap
-  const map = new Map();
-
-  for (let x of s1) {
-    if (map.has(x)) {
-      let count = map.get(x);
-      map.set(x, count + 1)
-    }
-    else {
-      map.set(x, 1)
-    }
+  while (n.next !== null) {
+    map.set(i, n);
+    n = n.next;
+    i++;
   }
 
-  // s2 must satisfy two things
-  for (let y of s2) {
-    if (!map.has(y)) { // all the letters are present
-      return false
-    }
+  map.set(i, n);
 
-    let rx = new RegExp(y, 'g');
-    let counts = (s2.match(rx) || []).length;
-
-    if (map.get(y) !== counts) {
-      return false
-    }
-  }
-
-  return true
+  let target = i - (k - 1);
+  return map.get(target);
 }
 
 // Tests for Problem 2
-console.log("Problem 2 Tests running... \n");
-
-console.assert(Problem2('', '') === true, 'empty string');
-console.assert(Problem2('aa', 'aa') === true, 'contains same 1 letter');
-console.assert(Problem2('abc', 'acb') === true, 'contains same three letters');
-
-console.assert(Problem2('abc', 'ac') === false, 'different lengths');
-console.assert(Problem2('abcc', 'abbc') === false, 'different counts');
+console.log("Problem2 Tests running... \n");
+console.assert(Problem2(new Node(0), 1).print() === "0 -> null", "1st to last of single");
+console.assert(Problem2(new Node(0, new Node(0)), 1).print() === "0 -> null", "first to last of length 2 ll");
+console.assert((Problem2(Node.fromArray([0,1,2,3,4]), 3)).print() === "2 -> 3 -> 4 -> null", "middle of an odd ll");
+console.assert((Problem2(Node.fromArray([0,2,0,2,2]), 1)).print() === "2 -> null", "interspersed values"); 
 
 
 
-const Problem2b = (s1, s2) => {
-  if (s1.length !== s2.length) return false
+const Problem2_runner = (n,k) => {
+  let p1 = n;
+  let p2 = n.next;
 
-  // sort the two strings
-  let s1_srtd = s1.split('').sort();
-  let s2_srtd = s2.split('').sort();
+  if (n.next === null) {
+    return n
+  }
 
-  return s1_srtd.every((v, i) => v === s2_srtd[i])
+  let i = 1;
+
+  while (p2.next !== null && p2.next.next !== null) {
+    p2 = p2.next.next;
+    i += 2;
+  }
+
+  if (p2.next !== null) {
+    p2 = p2.next;
+    i++;
+  }
+
+  let target = i - (k - 1);
+  
+  if (target === i) return p2
+  else {
+    let j = 0;
+    while (j < target) {
+      p1 = p1.next;
+      j++;
+    }
+
+    return p1
+  }
+
+  return n
 }
 
-// Tests for Problem 2b
-console.log("Problem 2b Tests running... \n");
+// Tests for Problem 2_runner
+console.log("Problem2_runner Tests running... \n");
+console.assert(Problem2_runner(new Node(0), 1).print() === "0 -> null", "1st to last of single");
+console.assert(Problem2_runner(new Node(0, new Node(0)), 1), "first to last of length 2 ll");
+console.assert((Problem2_runner(Node.fromArray([0,1,2,3,4]), 3)).print() === "2 -> 3 -> 4 -> null", "middle of an odd ll");
+console.assert((Problem2_runner(Node.fromArray([0,2,0,2,2]), 1)).print() === "2 -> null", "interspersed values"); 
 
-console.assert(Problem2b('', '') === true, 'empty string');
-console.assert(Problem2b('aa', 'aa') === true, 'contains same 1 letter');
-console.assert(Problem2b('abc', 'acb') === true, 'contains same three letters');
 
-console.assert(Problem2b('abc', 'ac') === false, 'different lengths');
-console.assert(Problem2b('abcc', 'abbc') === false, 'different counts');
 
+const problem2_aux = (n, k) => {
+  if (n === null) return { p: n, i: 0 }
+  
+  let { p : pr, i : ir } = problem2_aux(n.next, k);
+
+  if (ir === k) {
+    return { p: pr, i: ir }
+  }
+  else {
+    return { p: n, i: ir + 1 }
+  }
+}
+
+const Problem2_rec = (n, k) => {
+  return problem2_aux(n, k).p;
+}
+
+// Tests for Problem2_rec
+console.log("Problem2_rec Tests running... \n");
+console.assert(Problem2_rec(new Node(0), 1).print() === "0 -> null", "1st to last of single");
+console.assert(Problem2_rec(new Node(0, new Node(0)), 1), "first to last of length 2 ll");
+console.assert((Problem2_rec(Node.fromArray([0,1,2,3,4]), 3)).print() === "2 -> 3 -> 4 -> null", "middle of an odd ll");
+console.assert((Problem2_rec(Node.fromArray([0,2,0,2,2]), 1)).print() === "2 -> null", "interspersed values");
+
+
+/**
+ * Below is another recursive strategy provided by the book. Here,
+ * we didn't even have to try and break the recursion, we just
+ * used a global variable to store it once found.
+ */
+const Problem2_rec_b = (n1, k1) => {
+  let ans;
+  
+  const problem2_aux_b = (n, k) => {
+    if (n === null) return 0
+    
+    let index = problem2_aux_b(n.next, k) + 1;
+  
+    if (index === k) {
+      ans = n;
+    }
+    
+    return index
+  }
+
+  problem2_aux_b(n1, k1);
+  
+  return ans
+}
+
+// Tests for Problem2_rec_b
+console.log("Problem2_rec_b Tests running... \n");
+console.assert(Problem2_rec_b(new Node(0), 1).print() === "0 -> null", "1st to last of single");
+console.assert(Problem2_rec_b(new Node(0, new Node(0)), 1), "first to last of length 2 ll");
+console.assert((Problem2_rec_b(Node.fromArray([0,1,2,3,4]), 3)).print() === "2 -> 3 -> 4 -> null", "middle of an odd ll");
+console.assert((Problem2_rec_b(Node.fromArray([0,2,0,2,2]), 1)).print() === "2 -> null", "interspersed values");
+
+/**
+ * Below is yet another recursive strategy provided by the book.
+ * 
+ */
+ const Problem2_rec_c = (n1, k1) => {
+  let ans;
+  
+  const problem2_aux_c = (n, k) => {
+    if (n === null) return 0
+    
+    let index = problem2_aux_c(n.next, k) + 1;
+  
+    if (index === k) {
+      ans = n;
+    }
+    
+    return index
+  }
+
+  problem2_aux_c(n1, k1);
+  
+  return ans
+}
+
+// Tests for Problem2_rec_c
+console.log("Problem2_rec_c Tests running... \n");
+console.assert(Problem2_rec_c(new Node(0), 1).print() === "0 -> null", "1st to last of single");
+console.assert(Problem2_rec_c(new Node(0, new Node(0)), 1), "first to last of length 2 ll");
+console.assert((Problem2_rec_c(Node.fromArray([0,1,2,3,4]), 3)).print() === "2 -> 3 -> 4 -> null", "middle of an odd ll");
+console.assert((Problem2_rec_c(Node.fromArray([0,2,0,2,2]), 1)).print() === "2 -> null", "interspersed values");
 
 module.exports;
 
@@ -95,3 +182,5 @@ module.exports;
  *  - Is whitespace included?
  *  - Always ask for the size of the character set
  */
+
+

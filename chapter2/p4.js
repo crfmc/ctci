@@ -1,123 +1,160 @@
+const { Node } = require('./lib');
 /**
  * Question:
- *  Palindrome Permutation: Given a string, write a function to check if 
- *  it is a permutation of a palindrome. A palindrome is a word or phrase 
- *  that is the same forwards and backwards. A permutation is a rearrangement 
- *  of letters. The palindrome does not need to be limited to just dictionary 
- *  words.
+ * Write code to partition a linked list around a value x, such that all 
+ * nodes less than x come before all nodes greater than or equal to x. 
+ * If x is contained within the list, the values of x only need to be after 
+ * the elements less than x (see below).The partition element x can appear 
+ * anywhere in the "right partition"; it does not need to appear between 
+ * the left and right partitions.
+ * 
  */
 
 /**
  * Notes:
- *  This function must return whether a permutation of [s] is a palindrome.
- *  Finding all permutations and checking them would take minimum O(2^n n!), since
- *  I must check all possible combinations of 
+ * I've come up with a solution that is somewhat convoluted.
+ * The basic premise is using a runner to get a pointer on the
+ * first and middle nodes.
+ * p2 traverses wo nodes at a time, until either p2.next === null
+ * or p2.next.next === null. p1 moves one step at a time:
  * 
+ *  both start at the head of the linked list 
+ * 
+ *  keep track of length jumped by p2
+ *  while (p2 cannot jump by two anymore):
+ *    move p1 up by 1
+ *    move p2 up by 2
+ *    increase length by 2
  *  
- * - Check the length of a 
+ *  move p2 to head
  * 
+ *  if (head is in wrong place)
+ *    move p2 to head.next
+ *      
+ * 
+ *  i = 1
+ *  while (i <= length)
+ *    if p2.next is where its supposed to be
+ *      go to the next  
+ *    
+ *    if p1 finds value over part
+ *  
  */
-const Problem4 = (string) => {
-  let s = string.toLowerCase();
-  if (s.length === 0) return true;
-  if (s.length === 1) return true;
-  
-  let counts = {}
-  for (let c of s) {
-    if (c !== " ") {
-      if (counts[c] > 0) {
-        counts[c] = counts[c] + 1;
-      }
-      else {
-        counts[c] = 1;
-      }
-    }
-  }
 
-  let odds = 0;
-  for (let c in counts) {
-    if ((counts[c] % 2) === 1) {
-      odds++;
-    }
-  }
-  
-  return (odds < 2)
+/**
+ * 
+ * @param {*} n1 node to be moved after n2
+ * @param {*} n2 node to have n1 moved after
+ */
+const moveInFront = (n1, n2) => {
+  n2.next = n1;
+  n1.next = n2.next
 }
 
+/**
+ * Switches the two nodes' next pointers
+ * @param {*} n1 earlier node
+ * @param {*} n2 later node
+ */
+ const swapNext = (n1, n2) => {
+  if (n1.next === null || n2.next === null) {
+    throw new Error("Next element is null for n1 or n2");
+  }
+  else {
+    let aux = n2.next;
+    n2.next = n2.next.next;
+    aux.next = n1.next;
+    n1.next = aux;
+  }
+  // console.log(n1.print(),'\n', n2.print())
+}
 
-// Tests for Problem
-console.log("Problem 4 Tests running... \n");
-
-console.assert(Problem4("")===true, "empty string");
-console.assert(Problem4("s")===true, "single character");
-console.assert(Problem4("Tact coa")===true, "ctci example");
-
-
-/** Keeps a counter of odd numbered character counts */
-const Problem4_1 = (string) => {
-  let s = string.replaceAll(" ", "").toLowerCase();
-  let len = s.length;
-
-  if (len === 0) return true;
-  if (len === 1) return true;
+const Problem4 = (n, part) => {
   
-  let counts = {}
-  let odds = 0;
-  for (let c of s) {
-    if (odds >= Math.floor(len / 2) + 1) return false // Can't balance out
-    if (counts[c] > 0) {
-      counts[c] = counts[c] + 1;
-      if (counts[c] % 2 === 1) {
-        odds++;
-      }
-      else {
-        odds--;
-      }
+  let head = n;
+  let p1 = new Node(null, head);
+  let p2 = head;
+
+  while (p1.next !== null && p1.next.val < part) {
+    if (p1.next === null) {
+      return head
+    }
+    p1 = p1.next;
+    p2 = p2.next;
+  }
+
+  while (p2 !== null && p2.next) {
+    if (p2.next.val < part) {
+      swapNext(p1, p2);
     }
     else {
-      counts[c] = 1;
-      odds++;
+      p2 = p2.next;
     }
   }
+
   
-  return (odds < 2)
+  return p1.val === null ? p1.next : head
 }
 
 
 // Tests for Problem
 console.log("Problem 4 Tests running... \n");
+console.assert(Problem4(Node.fromArray([0,1]), 0).print() === '0 -> 1 -> null', "length of linked list is 2");
+console.assert(Problem4(Node.fromArray([0,1,0,1]), 1).print() === '0 -> 0 -> 1 -> 1 -> null', "length of linked list is 4");
+console.assert(Problem4(Node.fromArray([3,5,8,5,10,2]), 5).print() === '3 -> 2 -> 5 -> 8 -> 5 -> 10 -> null', "linked list including part");
 
-// console.assert(Problem4_1("")===true, "empty string");
-// console.assert(Problem4_1("s")===true, "single character");
-// console.assert(Problem4_1("Tact coa")===true, "ctci example");
-console.assert(Problem4_1("Tik c oalr")===false, "can't balance");
+
+
+/**
+  * Below are the solutions proposed in the book:
+  * 
+*/
+const Problem4_b = (n, part) => {
+  let beforeStart = null;
+  let beforeEnd = null;
+  let afterStart = null;
+  let afterEnd = null;
+
+  while (n !== null) {
+    let next = n.next;
+    n = n.next;
+  }
+
+  return n
+}
+
+
+// Tests for Problem
+console.log("Problem 4_b Tests running... \n");
+console.assert(Problem4_b(Node.fromArray([0,1]), 0).print() === '0 -> 1 -> null', "length of linked list is 2");
+console.assert(Problem4_b(Node.fromArray([0,1,0,1]), 1).print() === '0 -> 0 -> 1 -> 1 -> null', "length of linked list is 4");
+console.assert(Problem4_b(Node.fromArray([3,5,8,5,10,2]), 5).print() === '3 -> 2 -> 5 -> 8 -> 5 -> 10 -> null', "linked list including part");
+
 
 module.exports;
 
 /**
- * Notes:
- * I must improve on filtering the input string to something I can
- * work with. In this question, I should've filtered the string for spaces.
- * My code will not work if it is counting the spaces, so I should not regard
- * them.
+ * Notes: 
+ * This solution took a very long time ~4hrs. I attribute this to there 
+ * being so many plausible solutions. In this solution, I was able to 
+ * get a runtime of O(n). If I had a way of knowing where the first 
+ * element above the partition was, I would still require O(n), since 
+ * the ones ahead would still need to be visited. BCR is still linear.
  * 
- * Complexity:
- * This algorithms runs through each letter of the string, S, then runs 
- * through the list of counts. In the worst case, this list of counts is
- * the length of S (in the case where each letter appears once), therefore,
- * the time is 2S, so O(S), linear time.
+ * Space-wise I think I did alright. It would've been cool if I could
+ * have constant time, although best-case is that the partition is 
+ * greater or less than any value, at which point there would be no 
+ * need to allocate an auxiliary node object. Worst case, it is in 
+ * the middle, which means it is not quite linear, but O(g), where
+ * g is the number of nodes which have a value smaller than the
+ * partition and appear later in the linked list.
  * 
+ * STABILITY
+ * The book mentions the notion of stability, which refers to the
+ * way in which the linked list is ordered upon return. My algorithm
+ * returns the linked list in an order that does not preserve relative
+ * positions (i.e. you may find that a 0 that was originally in front
+ * of a 1, though in the return it is now behind it).
  * 
- * Improvements:
- * In order to improve the time complexity, one would need to avoid
- * traversing through the string. This is only possible by ending the
- * algorithm after half if there are too many odd character counts to
- * be fixed by the end of the string. For example: If the string is
- * "vehicular", we can check the character counts after "vehicu", since
- * we know that in the next 3 characters, there can't be a substring that
- * would result in at most 1 odd character count.
- * 
- * Note: Further improvements shown in CTCI include bitwise arithmetic, 
- * which I am not going to go into now.
  * 
  */

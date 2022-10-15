@@ -125,10 +125,10 @@ const Problem4_b = (n, part) => {
 
 
 // Tests for Problem
-console.log("Problem 4_b Tests running... \n");
-console.assert(Problem4_b(Node.fromArray([0,1]), 0).print() === '0 -> 1 -> null', "length of linked list is 2");
-console.assert(Problem4_b(Node.fromArray([0,1,0,1]), 1).print() === '0 -> 0 -> 1 -> 1 -> null', "length of linked list is 4");
-console.assert(Problem4_b(Node.fromArray([3,5,8,5,10,2]), 5).print() === '3 -> 2 -> 5 -> 8 -> 5 -> 10 -> null', "linked list including part");
+// console.log("Problem 4_b Tests running... \n");
+// console.assert(Problem4_b(Node.fromArray([0,1]), 0).print() === '0 -> 1 -> null', "length of linked list is 2");
+// console.assert(Problem4_b(Node.fromArray([0,1,0,1]), 1).print() === '0 -> 0 -> 1 -> 1 -> null', "length of linked list is 4");
+// console.assert(Problem4_b(Node.fromArray([3,5,8,5,10,2]), 5).print() === '3 -> 2 -> 5 -> 8 -> 5 -> 10 -> null', "linked list including part");
 
 
 module.exports;

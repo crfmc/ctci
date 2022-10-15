@@ -3,4 +3,4 @@
  */
 ((filename) => {
   require('./' + filename + '.js');
-})('p4');
+})('p5');

@@ -121,6 +121,20 @@ console.assert(Problem5_rec(Node.fromArray([0,0,0]), Node.fromArray([1,1,1])).pr
 console.assert(Problem5_rec(Node.fromArray([7,1,6]), Node.fromArray([5,9,2])).print() === '2 -> 1 -> 9 -> null', 'book provided test');
 console.assert(Problem5_rec(Node.fromArray([5,1,2]), Node.fromArray([5])).print() === '0 -> 2 -> 2 -> null', 'book provided test 2');
 
+
+/** Same problem, solution with the return linked list in the normal order */
+const Problem5_rec_rev = (n1, n2) => {
+  return "unimplemented"
+}
+
+// Tests for Problem 5_rec_rev
+// console.log("Problem 5_rec_rev Tests running... \n");
+// console.assert(Problem5_rec_rev(Node.fromArray([0]), Node.fromArray([1])).print() === '1 -> null', 'single value arrays');
+// console.assert(Problem5_rec_rev(Node.fromArray([0,0,0]), Node.fromArray([1,1,1])).print() === '1 -> 1 -> 1 -> null', 'multiple values');
+// console.assert(Problem5_rec_rev(Node.fromArray([7,1,6]), Node.fromArray([5,9,2])).print() === '2 -> 1 -> 9 -> null', 'book provided test');
+// console.assert(Problem5_rec_rev(Node.fromArray([5, 1, 2]), Node.fromArray([5])).print() === '0 -> 2 -> 2 -> null', 'book provided test 2');
+
+
 module.exports;
 
 /**

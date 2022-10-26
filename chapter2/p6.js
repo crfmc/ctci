@@ -1,58 +1,82 @@
+const { Node } = require('./lib');
+
 /**
  * Question:
- * Implement a method to perform basic string compression using the counts of 
- * repeated characters. For example, the string aabcccccaaa would become 
- * a2b1c5a3. If the "compressed" string would not become smaller than the 
- * original string, your method should return the original string. You can 
- * assume the string has only uppercase and lowercase letters (a - z).
+ * 
  */
 
 /**
  * Notes:
+ * This first solution is the best I could come up with in half an hour.
+ * I looked into other solutions, but they became overly complicated before
+ * any real progress was made, nothing really came to mind.
 */
-const Problem6 = (s) => {
-  let char = 0;
-  let counts = new Map();
-
-  for (let i = 0; i <= s.length - 1; i++) {
-    if (counts.has(char) && s[char] === s[i]) {
-      counts.set(char, counts.get(char) + 1);
-    }
-    else {
-      char = i;
-      counts.set(char, 1);
-    }
+const Problem6 = (n) => {
+  if (n === null || n.next === null) {
+    return true
   }
+  let head = n;
+  p1 = head;
+  p2 = head.next;
 
-  let cs = "";
-  counts.forEach((value, key) => {
-    cs = cs + s[key] + value;
-  });
+  let len = 2;
 
-  if (cs.length >= s.length) {
-    return s;
+  while (p2.next!== null && p2.next.next !== null) {
+    p1 = p1.next;
+    p2 = p2.next.next;
+    len += 2;
+  }
+  if (p2.next !== null) {
+    len += 1;
+    p1 = p1.next.next; // skip the middle node
   }
   else {
-    return cs;
+    p1= p1.next;
   }
+  p2 = head;
+
+  let p2a = [];
+  let p1a = [];
+  let a_len = Math.floor(len / 2);
+
+  // create two subarrays, of equal length (a_len)
+  for (let i = 1; i <= a_len; i++) {
+    p2a.push(p2.val);
+    p1a.push(p1.val);
+    p2 = p2.next;
+    p1 = p1.next;
+  }
+
+  // compare the two arrays
+  for (let j = 0; j < a_len; j++) {
+    if (p2a[j] !== p1a[a_len - 1 - j]) {
+      return false
+    }
+  }
+
+  return true
 }
 
   
 // Tests for Problem
-console.log("Problem 5 Tests running... \n");
+console.log("Problem 6 Tests running... \n");
 
-console.assert( Problem6("aabcccccaaa") === "a2b1c5a3", "ex1");
-console.assert( Problem6("abcd") === "abcd", "compressed is longer");
-console.assert( Problem6("") === "", "empty string");
-console.assert( Problem6("a") === "a", "single letter, compress longer");
+console.assert( Problem6(null) === true, "null parameter");
+console.assert( Problem6(new Node(0)) === true, "single node linked list");
+console.assert( Problem6( Node.fromArray([0,1,2,3,2,1,0])) === true, 
+"decently long odd length linked list");
+console.assert( Problem6(Node.fromArray([1,2,4,4,2,1])) === true, 
+"decently long even length linked list");
+console.assert( Problem6(Node.fromArray([0,1,2,3,2,7,0])) === false, 
+"long odd length wrong linked list");
+console.assert( Problem6(Node.fromArray([1,2,4,4,7,1])) === false, 
+"long even length wrong linked list");
+
 
 
 module.exports;
 
 /**
  * Notes:
- *  VERY IMPORTANT NOTE ABOUT MAPS IN JS:
- * The Map.protorype.forEach() function calls the callback fn(value, key, map).
- * This means that the value is the first parameter returned, where one
- * might expect it to be key, then value, as it would be in an object.
+ * 
 */

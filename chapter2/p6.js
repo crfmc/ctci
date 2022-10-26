@@ -1,4 +1,4 @@
-const { Node } = require('./lib');
+const { Node, Stack } = require('./lib');
 
 /**
  * Question:
@@ -72,7 +72,93 @@ console.assert( Problem6(Node.fromArray([0,1,2,3,2,7,0])) === false,
 console.assert( Problem6(Node.fromArray([1,2,4,4,7,1])) === false, 
 "long even length wrong linked list");
 
+/**
+ * Notes:
+ * This second solution came to mind after reading hint #5 and #13.
+ * In truth, it was something I had originally considered but I
+ * did not entertain it enough to reach a solution.
+ * 
+ * Perhaps it was because I didn't have a stack implemented. The 
+ * moment I saw the word Stack, I knew exactly what had to be
+ * done.
+*/
+const Problem6_b = (n) => {
+  if (n === null || n.next === null) {
+    return true
+  }
+  let head = n;
+  p1 = head;
+  p2 = head.next;
+  let s = new Stack();
 
+  while (p2.next!== null && p2.next.next !== null) {
+    p2 = p2.next.next;
+    p1 = p1.next;
+  }
+  if (p2.next !== null) {
+    p1 = p1.next.next; // skip the middle node
+  }
+  else {
+    p1= p1.next; // right side of middle
+  }
+  p2 = head;
+
+  while (p1 !== null) {
+    s.push(p1.val);
+    p1 = p1.next;
+  }
+
+  while (s.size > 0) {
+    if (p2.val !== s.pop()) {
+      return false
+    }
+    p2 = p2.next;
+  }
+
+  return true
+}
+
+  
+// Tests for Problem
+console.log("Problem6_b Tests running... \n");
+
+console.assert( Problem6_b(null) === true, "null parameter");
+console.assert( Problem6_b(new Node(0)) === true, "single node linked list");
+console.assert( Problem6_b( Node.fromArray([0,1,2,3,2,1,0])) === true, 
+"decently long odd length linked list");
+console.assert( Problem6_b(Node.fromArray([1,2,4,4,2,1])) === true, 
+"decently long even length linked list");
+console.assert( Problem6_b(Node.fromArray([0,1,2,3,2,7,0])) === false, 
+"long odd length wrong linked list");
+console.assert( Problem6_b(Node.fromArray([1,2,4,4,7,1])) === false, 
+"long even length wrong linked list");
+
+
+/**
+ * Notes:
+ * Recursive solution for this problem based on a hint given
+ * in the book.
+ * 
+ * Assumes the length of the linked list in known
+*/
+const Problem6_rec = (n) => {
+  return true
+}
+
+  
+// Tests for Problem
+console.log("Problem6_rec Tests running... \n");
+
+console.assert( Problem6_rec(null) === true, "null parameter");
+console.assert( Problem6_rec(new Node(0)) === true, "single node linked list");
+console.assert( Problem6_rec( Node.fromArray([0,1,2,3,2,1,0])) === true, 
+"decently long odd length linked list");
+console.assert( Problem6_rec(Node.fromArray([1,2,4,4,2,1])) === true, 
+"decently long even length linked list");
+console.assert( Problem6_rec(Node.fromArray([0,1,2,3,2,7,0])) === false, 
+"long odd length wrong linked list");
+console.assert( Problem6_rec(Node.fromArray([1,2,4,4,7,1])) === false, 
+"long even length wrong linked list");
 
 module.exports;
 

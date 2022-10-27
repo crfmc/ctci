@@ -162,6 +162,32 @@ console.assert( Problem6_rec(Node.fromArray([0,1,2,3,2,7,0]), 7) === false,
 console.assert( Problem6_rec(Node.fromArray([1,2,4,4,7,1]), 6) === false, 
 "long even length wrong linked list");
 
+/**
+ * Notes:
+ * Recursive solution for this problem based on a hint given
+ * in the book. This time I will try not to use NodeAt.
+*/
+const Problem6_rec_b = (n, len) => {
+  // if (len < 2 || n === null) return true
+  // // console.log(n.print(), len)
+  // return n.val === n.nodeAt(len - 1).val && Problem6_rec_b(n.next, len - 2);
+}
+
+  
+// Tests for Problem
+console.log("Problem6_rec_b Tests running... \n");
+
+// console.assert( Problem6_rec_b(null, 0) === true, "null parameter");
+// console.assert( Problem6_rec_b(new Node(0), 1) === true, "single node linked list");
+// console.assert( Problem6_rec_b(Node.fromArray([0,1,2,3,2,1,0]), 7) === true, 
+// "decently long odd length linked list");
+// console.assert( Problem6_rec_b(Node.fromArray([1,2,4,4,2,1]), 6) === true, 
+// "decently long even length linked list");
+// console.assert( Problem6_rec_b(Node.fromArray([0,1,2,3,2,7,0]), 7) === false, 
+// "long odd length wrong linked list");
+// console.assert( Problem6_rec_b(Node.fromArray([1,2,4,4,7,1]), 6) === false, 
+// "long even length wrong linked list");
+
 module.exports;
 
 /**

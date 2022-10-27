@@ -141,23 +141,25 @@ console.assert( Problem6_b(Node.fromArray([1,2,4,4,7,1])) === false,
  * 
  * Assumes the length of the linked list in known
 */
-const Problem6_rec = (n) => {
-  return true
+const Problem6_rec = (n, len) => {
+  if (len < 2 || n === null) return true
+  // console.log(n.print(), len)
+  return n.val === n.nodeAt(len - 1).val && Problem6_rec(n.next, len - 2);
 }
 
   
 // Tests for Problem
 console.log("Problem6_rec Tests running... \n");
 
-console.assert( Problem6_rec(null) === true, "null parameter");
-console.assert( Problem6_rec(new Node(0)) === true, "single node linked list");
-console.assert( Problem6_rec( Node.fromArray([0,1,2,3,2,1,0])) === true, 
+console.assert( Problem6_rec(null, 0) === true, "null parameter");
+console.assert( Problem6_rec(new Node(0), 1) === true, "single node linked list");
+console.assert( Problem6_rec(Node.fromArray([0,1,2,3,2,1,0]), 7) === true, 
 "decently long odd length linked list");
-console.assert( Problem6_rec(Node.fromArray([1,2,4,4,2,1])) === true, 
+console.assert( Problem6_rec(Node.fromArray([1,2,4,4,2,1]), 6) === true, 
 "decently long even length linked list");
-console.assert( Problem6_rec(Node.fromArray([0,1,2,3,2,7,0])) === false, 
+console.assert( Problem6_rec(Node.fromArray([0,1,2,3,2,7,0]), 7) === false, 
 "long odd length wrong linked list");
-console.assert( Problem6_rec(Node.fromArray([1,2,4,4,7,1])) === false, 
+console.assert( Problem6_rec(Node.fromArray([1,2,4,4,7,1]), 6) === false, 
 "long even length wrong linked list");
 
 module.exports;

@@ -1,64 +1,75 @@
+const { Node } = require('./lib.js');
 /**
  * Question:
- *  Given an image represented by an NxN matrix, where each pixel in the image 
- * is 4 bytes, write a method to rotate the image by 90 degrees. 
- * (can you do this in place?)
+ * 
  */
 
 /**
  * Notes:
  */
-const Problem7 = (m) => {
-  let len = m.length;
-  if (len < 2) return m.toString();
-
-  let m0 = Array.from({length:len}, () => {
-    return new Array(len).fill(0);
-  });
-
-  for (let i = 0; i <= len - 1; i++) {
-    for (let j = 0; j <= len - 1; j++) {
-      let val = m[i][j];
-      m0[j][len - 1 - i] = val;
-    }
+const Problem7 = (l1, l2) => {
+  let intersection;
+  
+  while (l1 !== null) {
+    l1.visited = true;
+    l1 = l1.next;
   }
-  return m0.toString()
+
+  while (l2 !== null) {
+    if (l2.visited) {
+      delete l2.visited;
+      intersection = l2;
+      break;
+    }
+    l2 = l2.next;
+  }
+  
+  return intersection
 }
 
+const Problem7_tester = (l1, idx1, l2, idx2) => {
+  let intersect = new Node(99);
+  let h1 = l1;
+  let h2 = l2;
+  let i = 0;
 
-// Tests for Problem
-console.log("Problem 7 Tests running... \n");
-console.assert(Problem7([[]]) === "", "empty matrix");
-console.assert(Problem7([[1]]) === "1", "single value matrix");
-console.assert(Problem7([[1, 2], [3, 4]]) === "3,1,4,2", "small matrix");
-console.assert(Problem7([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) === "7,4,1,8,5,2,9,6,3",
-  "larger matrix");
+  while (i <= idx1 - 1 || i <= idx2 - 1) {
+    console.log(i)
+    if (i === idx1) {
+      console.log('first index', i)
+      let aux = l1.next;
+      l1.next = intersect;
+      intersect.next1 = aux;
+    }
+    else if (i === idx2) {
+      console.log('second index', i)
+      let aux = l1.next;
+      l2.next = intersect;
+      intersect.next2 = aux;
+    }
+
+    l1 = l1.next;
+    l2 = l2.next;
+    i++;
+  }
+  console.log(l1.print(), l2.print())
+  
+  return Problem7(h1, h2);
+}
+Problem7_tester(Node.fromArray([1,2,3]), 1, Node.fromArray([4,5,6]), 1);
+
+// Tests for Problem7
+// console.assert( Problem7(null, 0) === true, "null parameter");
+// console.assert( Problem7(new Node(0), 1) === true, "single node linked list");
+// console.assert( Problem7(Node.fromArray([0,1,2,3,2,1,0]), 7) === true, 
+// "decently long odd length linked list");
+// console.assert( Problem7(Node.fromArray([1,2,4,4,2,1]), 6) === true, 
+// "decently long even length linked list");
+// console.assert( Problem7(Node.fromArray([0,1,2,3,2,7,0]), 7) === false, 
+// "long odd length wrong linked list");
+// console.assert( Problem7(Node.fromArray([1,2,4,4,7,1]), 6) === false, 
+// "long even length wrong linked list");
 
 
 
 module.exports;
-
-/**
- * Notes: 
- * Let's study this line:
- * 
- * let m0 = Array.from({length:len}, () => {
- *  return new Array(len).fill(0);
- * });
- * 
- * One important thing to note about using Array.prototyope.fill(), 
- * is that with numbers and strings it works fine. But note, that 
- * with objects, such as when creating two-dimensional arrays,
- * it will assign the same object to all positions in the array.
- * (See CAVEAT 1 below). In order to avoid this issue, we choose
- * to use a lambda function (anonymous). Here, we used an object 
- * to ACT as an array, by giving it a property of length, which we 
- * set to the variable len. By doing this, we are givent a new array
- * for each value in a "fake" array of length len.
- */
-
-// CAVEAT 1
-// let a = new Array(2).fill(new Array(2).fill(0));
-// console.log(a[0] === a[1]);
-// let b = new Array(2).fill({1: "hi"});
-// console.log(b[0] === b[1]);

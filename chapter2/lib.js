@@ -61,6 +61,21 @@ class Node {
 
     p1.next = p2;
   }
+  reverse() {
+    let n = this;
+    let tail = n;
+    let head = n;
+    
+    let aux;
+    while (tail.next !== null) {
+      aux = tail.next;
+      tail.next = tail.next.next;
+      aux.next = head;
+      head = aux;
+    }
+    return head
+  }
+
 
   // [fromArray] returns a linked list given an array of values recursively
   static fromArray(a) {

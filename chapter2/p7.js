@@ -44,24 +44,59 @@ const Problem7 = (l1, l2) => {
 // }
 
 /**
- * Notes: This soluton attempts to reach a O(A+B) runtime and
- * O(1) space complexity. In order to do this it requires an
- * O(A+B) reversal of both lists.
+ * Notes: 
+ * 
  */
 const Problem7_b = (l1, l2) => {
-  console.log(l1.print());
-  console.log(l2.print());
-  let l1_rev = l1.reverse();
-  let l2_rev = l2.reverse();
+  if (l1 === l2) return l1
+  let l1h = l1;
+  let l1l = 1; // length of l1
+  let l2h = l2;
+  let l2l = 1; // length of l2
+
+  while (l1h.next !== null && l1h.next.next !== null) {
+    l1h = l1h.next.next;
+    l1l += 2;
+  }
+  if (l1h.next !== null) l1l++;
+
+  while (l2h.next !== null && l2h.next.next !== null) {
+    l2h = l2h.next.next;
+    l2l += 2;
+  }
+  if (l2h.next !== null) l2l++;
+
+  let diff = l2l - l1l;
+  let long, short;
   
-  console.log('--------')
-  console.log('l1: ',l1_rev.print(), '\n', 'l2: ',l2_rev.print());
+  if (diff > 0) {
+    long = l2;
+    short = l1;
+  }
+  else {
+    long = l1;
+    short = l2
+  }
   
+  diff = Math.abs(diff);
+
+  while (diff !== 0) {
+    long = long.next;
+    diff--;
+  }
   
-  return l1
+  while (long !== null) {
+    if (long === short) {
+      return long
+    }
+    long = long.next;
+    short = short.next;
+  }
+
+  return null
 }
 
-const Problem7_tester = (l1, l2, int=Node.fromArray([10,11,12])) => {
+const Problem7_tester = (l1, l2, int=Node.fromArray(['x','y','z', 1])) => {
   let h1 = l1;
   let h2 = l2;
 
@@ -79,18 +114,10 @@ const Problem7_tester = (l1, l2, int=Node.fromArray([10,11,12])) => {
   return  Problem7_b(h1, h2) === int;
 }
 
+let singleNode = new Node(1);
 
 // Tests for Problem7
-console.assert(Problem7_tester(Node.fromArray([0,1,2]),Node.fromArray([9,8])) === true, "single item array");
-// console.assert( Problem7(new Node(0), 1) === true, "single node linked list");
-// console.assert( Problem7(Node.fromArray([0,1,2,3,2,1,0]), 7) === true, 
-// "decently long odd length linked list");
-// console.assert( Problem7(Node.fromArray([1,2,4,4,2,1]), 6) === true, 
-// "decently long even length linked list");
-// console.assert( Problem7(Node.fromArray([0,1,2,3,2,7,0]), 7) === false, 
-// "long odd length wrong linked list");
-// console.assert( Problem7(Node.fromArray([1,2,4,4,7,1]), 6) === false, 
-// "long even length wrong linked list");
-
+console.assert(Problem7(singleNode, singleNode) === singleNode, "first item similar");
+console.assert(Problem7_tester(Node.fromArray(['a','b','c','d']), Node.fromArray([1,4])) === true, "different lengths");
 
 module.exports;

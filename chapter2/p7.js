@@ -45,26 +45,56 @@ const Problem7 = (l1, l2) => {
 
 /**
  * Notes: 
+ * This algorithm uses the knowledge of the shared list of nodes. In
+ * other words, if we know the two lists share nodes n...m, then
+ * we know the intersection lies between the nodes 0..n in either
+ * list. It also means that when the intersection occurs, the length
+ * of the two lists must be equal already.
+ * 
+ * Note: The book's solution includes a check that was not made in any
+ * solution thus: the last node must be the same in either linked list.
+ * It was added after solutions were made. This was done by tracking the
+ * final node.
  * 
  */
 const Problem7_b = (l1, l2) => {
   if (l1 === l2) return l1
   let l1h = l1;
+  let l1t; // tail node of l1
   let l1l = 1; // length of l1
   let l2h = l2;
+  let l2t; // tail node of l2
   let l2l = 1; // length of l2
 
   while (l1h.next !== null && l1h.next.next !== null) {
     l1h = l1h.next.next;
     l1l += 2;
   }
-  if (l1h.next !== null) l1l++;
+  if (l1h.next !== null) {
+    l1t = l1h.next;
+    l1l++;
+  }
+  else {
+    l1t = l1h;
+  }
 
   while (l2h.next !== null && l2h.next.next !== null) {
     l2h = l2h.next.next;
     l2l += 2;
   }
-  if (l2h.next !== null) l2l++;
+
+  
+  if (l2h.next !== null) {
+    l2t = l2h.next;
+    l2l++;
+  }
+  else {
+    l2t = l2h;
+  }
+
+  if (l1t !== l2t) {
+    return null;
+  }
 
   let diff = l2l - l1l;
   let long, short;
@@ -119,5 +149,6 @@ let singleNode = new Node(1);
 // Tests for Problem7
 console.assert(Problem7(singleNode, singleNode) === singleNode, "first item similar");
 console.assert(Problem7_tester(Node.fromArray(['a','b','c','d']), Node.fromArray([1,4])) === true, "different lengths");
+console.assert(Problem7_tester(Node.fromArray(['a','b','c','d']), Node.fromArray([1,4]), null) === true, "no intersection");
 
 module.exports;

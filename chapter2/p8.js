@@ -9,18 +9,34 @@ const { Node } = require('./lib.js');
  * things. Find out if there's a loop and then find the beginning.
  * The first part was relatively straightforward.
  * 
+ * 
+ * I did not get this question at all, had to look at the solution.
+ * Even the hints were difficult to decipher.
+ * 
  */
-const Problem8 = (n) => {
+const Problem8_sol = (n) => {
+  let head = n;
   let p1 = n;
-  let p2 = n.next;
+  let p2 = n;
 
-  while (p1 !== p2) {
-    if (p2.next.next === null) return null // no loop since there's an end
+  let start = null;
+
+  while (p2.next !== null && p2.next.next !== null) {
+    if (p1 === p2) break;
     p1 = p1.next;
     p2 = p2.next;
   }
 
-  return p1
+  while (p1 !== null) {
+    if (p1 === head) {
+      start = head;
+      break;
+    }
+    p1 = p1.next;
+    head = head.next;
+  }
+
+  return start
 }
 
 /**
@@ -57,8 +73,8 @@ const createLoop = (n, i) => {
 
 console.log(createLoop(Node.fromArray(['a','b','c','d','e']), 2).print());
 
-// Tests for Problem8
-console.assert(Problem8(Node.fromArray(['a','b','c','d', 'e'])) === null, "");
-console.assert(Problem8(Node.fromArray(['a','b','c','d'])) === null, "");
+// Tests for Problem8_sol
+console.assert(Problem8_sol(Node.fromArray(['a','b','c','d', 'e'])) === null, "");
+console.assert(Problem8_sol(Node.fromArray(['a','b','c','d'])) === null, "");
 
 module.exports;

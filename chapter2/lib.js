@@ -35,6 +35,24 @@ class Node {
     }
     return s + " -> null"
   }
+  isCircular() {
+    let p1 = this;
+    let p2 = p1;
+
+    while (p2.next !== null && p2.next.next !== null) {
+      if (p1 === p2) {
+        return true
+      }
+      p2 = p2.next.next;
+      p1 = p1.next;
+    }
+
+    if (p2.next === null || p2.next.next === null) {
+      return false
+    }
+    
+    return true
+  }
   // Uses the runner technique to intercalate values
   // Note: assumes even number of nodes
   weave() {
@@ -47,7 +65,6 @@ class Node {
       p2 = p2.next;
     }
 
-    // console.log("second loop");
     p1 = head;
     p2 = p2.next;
 

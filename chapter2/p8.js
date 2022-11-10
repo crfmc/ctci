@@ -54,27 +54,36 @@ const createLoop = (n, i) => {
   let head = n;
   let loopBeginning = null;
   let j = 0;
-  while (n !== null) {
-    console.log(n.print())
+
+  // Record the beginning node when it is traversed to
+  while (n.next !== null) {
     if (j === i) {
       loopBeginning = n; // get the beginning of loop
+      break;
     }
     n = n.next;
     j++;
   }
 
-  if (loopBeginning === null) throw RangeError('index not in range');
-  else {
-    n.next = loopBeginning;
+  
+  if (j < i) { // Counter did not reach i by the end
+    throw RangeError(`index ${i} is too large, try a number under ${j + 2}`)
   }
+  if (j === i) { // Last node is chosen
+    loopBeginning = n;
+  }
+
+  n.next = loopBeginning;
 
   return head;
 }
 
-console.log(createLoop(Node.fromArray(['a','b','c','d','e']), 2).print());
-
 // Tests for Problem8_sol
-console.assert(Problem8_sol(Node.fromArray(['a','b','c','d', 'e'])) === null, "");
-console.assert(Problem8_sol(Node.fromArray(['a','b','c','d'])) === null, "");
+console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 0)), "loop of entire linked list");
+console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 1)), "loop of length - 1 linked list");
+console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 2)), "loop of length - 2 linked list");
+console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 3)), "loop of length - 3 linked list");
+console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 4)), "loop of length linked list");
+
 
 module.exports;

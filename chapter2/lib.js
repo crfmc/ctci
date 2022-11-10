@@ -37,7 +37,8 @@ class Node {
   }
   isCircular() {
     let p1 = this;
-    let p2 = p1;
+    if (p1.next === null) return false
+    let p2 = p1.next;
 
     while (p2.next !== null && p2.next.next !== null) {
       if (p1 === p2) {
@@ -46,12 +47,8 @@ class Node {
       p2 = p2.next.next;
       p1 = p1.next;
     }
-
-    if (p2.next === null || p2.next.next === null) {
-      return false
-    }
     
-    return true
+    return false
   }
   // Uses the runner technique to intercalate values
   // Note: assumes even number of nodes

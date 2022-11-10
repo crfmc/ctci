@@ -59,7 +59,6 @@ const createLoop = (n, i) => {
   while (n.next !== null) {
     if (j === i) {
       loopBeginning = n; // get the beginning of loop
-      break;
     }
     n = n.next;
     j++;
@@ -77,6 +76,7 @@ const createLoop = (n, i) => {
 
   return head;
 }
+
 
 // Tests for Problem8_sol
 console.assert(Problem8_sol(createLoop(Node.fromArray(['a','b','c','d','e']), 0)), "loop of entire linked list");

@@ -1,4 +1,4 @@
-const { Node, LLNode, LL } = require('./lib');
+const { Node, LLNode, LL } = require('../lib');
 /**
  * Question:
  *  - Implement an algorithm to find the kth to last element of a singly linked list.

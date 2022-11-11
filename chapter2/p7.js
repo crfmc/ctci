@@ -1,4 +1,4 @@
-const { Node } = require('./lib.js');
+const { Node } = require('../lib.js');
 /**
  * Question:
  * 

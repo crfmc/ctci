@@ -1,4 +1,4 @@
-const { Node } = require('./lib');
+const { Node } = require('../lib');
 
 /**
  * Notes:

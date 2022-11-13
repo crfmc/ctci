@@ -151,6 +151,9 @@ class Stack {
     this.size++;
   }
   peek() {
+    if (this.size < 1) {
+      throw RangeError('This stack does not have any values to peek.');
+    }
     return this.items[this.size - 1];
   }
   pop() {
@@ -198,7 +201,7 @@ class StackLL {
   }
   peek() {
     if (this.top === null) {
-      throw RangeError('This stack does not have any values to pop.');
+      throw RangeError('This stack does not have any values to peek.');
     }
     return this.top.data
   }
@@ -254,7 +257,7 @@ class QueueLL {
   }
   peek() {
     if (this.first === null) {
-      throw RangeError('This stack does not have any values to pop.');
+      throw RangeError('This stack does not have any values to peek.');
     }
     return this.first.data
   }

@@ -1,4 +1,4 @@
-const { Node } = require('./lib');
+const { Node } = require('../lib');
 /**
  * Question:
  * Write code to partition a linked list around a value x, such that all 

@@ -52,17 +52,6 @@ const Problem1 = () => {
     return "unimplemented"
 }
 
-let tsa = new TriStackArray();
-tsa.add("x", 1);
-tsa.add("y", 1);
-tsa.add("z", 1);
-
-tsa.add("a", 2);
-
-tsa.add(1, 3);
-
-console.log(tsa.printStack(1));
-
 console.log('Problem 1 tests running... \n');
 console.assert(Problem1() === "unimplemented", "");
 

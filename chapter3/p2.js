@@ -93,7 +93,13 @@ console.log("Problem2 Tests running... \n");
 module.exports;
 
 /**
- * Notes:
+ * Notes: The solution for this problem is similar to the one
+ * provided. Instead of creating a field for each node,
+ * they have a new stack which only holds the new mins.
+ * This way, you don't add space each time a node is visited,
+ * which is especially useful in the case when the minimum is
+ * the first node and you do not need to use any more space
+ * to keep that information.
  * 
  */
 

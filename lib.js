@@ -173,7 +173,7 @@ class Stack {
 }
 
 /**
- * This implementation of a stack is the same, jsut uses a linked 
+ * This implementation of a stack is the same, just uses a linked 
  * list
  */
  class StackNode {
@@ -182,7 +182,7 @@ class Stack {
     this.next = next;
   }
 }
-class StackLL {
+class StackLL { // O(1) time
   constructor(val) {
     if (typeof(val) === 'undefined') {
       this.top = null;
@@ -191,21 +191,21 @@ class StackLL {
       this.top = new StackNode(val);
     }
   }
-  isEmpty() {
+  isEmpty() { // O(1) time
     return this.top === null
   }
-  push(val) {
+  push(val) { // O(1) time
     let old_top = this.top;
     let new_top = new StackNode(val, old_top);
     this.top = new_top;
   }
-  peek() {
+  peek() { // O(1) time
     if (this.top === null) {
       throw RangeError('This stack does not have any values to peek.');
     }
     return this.top.data
   }
-  pop() {
+  pop() { // O(1) time
     if (this.top === null) {
       throw RangeError('This stack does not have any values to pop.');
     }

@@ -45,15 +45,43 @@ class TriStackArray {
 /**
  * Notes: I am going to use an array to store 3 stacks by leveraging the O(1) lookup time,
  * and inserting at the end of the array instead of the beginning.
- * 
  */
 
-const Problem1 = () => {
-    return "unimplemented"
+/**
+ * @returns whether or not Problem 1 returns the correct value
+ * Given a list of 3 stacks, this function should be able to store
+ * them all correctly in a TriStackArray object.
+ */
+const Problem1Tester = (s1, s2, s3) => {
+
+    let tsa = new TriStackArray();
+
+    [s1,s2,s3].forEach((stack, i) => {
+        let stackId = i;
+        stack.forEach((val, i) => {
+            tsa.add(val, stackId + 1);
+        });
+    });
+
+    // Check whether the original stack is the same as
+    // the one stored in the TriStackArray
+    
+    [s1,s2,s3].forEach((stack, i) => {
+        let stackId = i;
+        let newArr = tsa.printStack(stackId + 1);
+        stack.forEach((val, i, arr) => {
+            if (arr[i] !== newArr[i]) {
+                return false;
+            }
+        });
+    });
+
+    return true
 }
 
 console.log('Problem 1 tests running... \n');
-console.assert(Problem1() === "unimplemented", "");
+console.assert(Problem1Tester([], [], []), "");
+console.assert(Problem1Tester([1,2], [3,4], [5,6]), "");
 
 
 /**

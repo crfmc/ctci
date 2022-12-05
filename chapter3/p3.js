@@ -1,37 +1,74 @@
-const { Node } = require('../lib');
+const { Node, StackLL } = require('../lib');
 /**
  * Question:
- * Delete Middle Node: Implement an algorithm to delete a node in the middle 
- * (i.e., any node but the first and last node, not necessarily the exact middle)
- * of a singly linked list, given only access to that node.
+ * Imagine a (literal) stack of plates. If the stack gets too high, 
+ * it might topple. Therefore, in real life, we would likely start a 
+ * new stack when the previous stack exceeds some threshold. Implement 
+ * a data structure SetOfStacks that mimics this. SetOfStacks should be 
+ * composed of several stacks and should create a new stack once the 
+ * previous one exceeds capacity. SetOfStacks. push () and 
+ * SetOfStacks. pop () should behave identically to a single stack 
+ * (that is, pop () should return the same values as it would if 
+ * there were just a single stack).
  */
 
 
 /**
- * Notes: this one came pretty naturally, that's kinda good. Sort of a simple one.
+ * Notes: 
+ * An O(1) time solution for this one is to use a stack of stacks,
+ * which would allow us to pop from the top stack, and push to the
+ * top of the stack.
+ * push: O(1) time-push to stack at the top of the stack of stacks
+ * pop: O(1) time-pop from the top of the stack of stacks
  * 
  */
-const Problem3 = (n) => {
-  if (n.next === null) {
-    throw new Error('this node is the last in the list, there is not middle node.')
+
+
+class p3Stack extends StackLL {
+  constructor(val) {
+    super(val);
+    this.length = val ? 1 : 0;
   }
-  n.val = n.next.val;
-  n.next = n.next.next;
-  return
+  push(val) {
+    super.push(val);
+    this.length++;
+  }
+  pop() {
+    super.pop();
+    this.length--;
+  }
+}
+
+class SetOfStacks {
+  constructor(cap) {
+    this.capacity = cap;
+    this.stacks = new StackLL(new p3Stack);
+
+  }
+  // If the length of the stack is equal to capacity, create a new one
+  push(val) {
+    if (this.stacks.top.data.length >= this.capacity) {
+      let newStack = new p3Stack(val);
+      this.stacks.push(newStack);
+    }
+    else this.stacks.top.data.push(val);
+  }
+}
+
+const Problem3 = (n) => {
+  return "uniplemented"
 }
 
 const Problem3_tester = (a, idx) => {
-  let ll = Node.fromArray(a);
-  Problem3(ll.nodeAt(idx));
-  return ll.print();
+  return "uniplemented"
 }
 
 
 // Tests for Problem 3
 console.log("Problem 3 Tests running... \n");
-console.assert(Problem3_tester([1, 2, 3, 4], 1) === '1 -> 3 -> 4 -> null', 'Deleting second value');
-console.assert(Problem3_tester([1, 2, 3, 4], 2) === '1 -> 2 -> 4 -> null', 'Deleting third value');
-console.assert(Problem3_tester([1, 2, 3], 1) === '1 -> 3 -> null', 'Deleting middle value');
+// console.assert(Problem3_tester([1, 2, 3, 4], 1) === '1 -> 3 -> 4 -> null', 'Deleting second value');
+// console.assert(Problem3_tester([1, 2, 3, 4], 2) === '1 -> 2 -> 4 -> null', 'Deleting third value');
+// console.assert(Problem3_tester([1, 2, 3], 1) === '1 -> 3 -> null', 'Deleting middle value');
 
 
 

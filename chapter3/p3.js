@@ -39,33 +39,33 @@ class p3Stack extends StackLL {
   }
 }
 
-class SetOfStacks {
-  constructor(cap) {
-    this.capacity = cap;
-    this.stacks = new StackLL(new p3Stack);
+// class SetOfStacks {
+//   constructor(cap) {
+//     this.capacity = cap;
+//     this.stacks = new StackLL(new p3Stack);
 
-  }
-  // If the length of the stack is equal to capacity, create a new one
-  push(val) {
-    if (this.stacks.top.data.length >= this.capacity) {
-      let newStack = new p3Stack(val);
-      this.stacks.push(newStack);
-    }
-    else this.stacks.top.data.push(val);
-  }
-}
+//   }
+//   // If the length of the stack is equal to capacity, create a new one
+//   push(val) {
+//     if (this.stacks.top.data.length >= this.capacity) {
+//       let newStack = new p3Stack(val);
+//       this.stacks.push(newStack);
+//     }
+//     else this.stacks.top.data.push(val);
+//   }
+// }
 
-const Problem3 = (n) => {
-  return "uniplemented"
-}
+// const Problem3 = (n) => {
+//   return "uniplemented"
+// }
 
-const Problem3_tester = (a, idx) => {
-  return "uniplemented"
-}
+// const Problem3_tester = (a, idx) => {
+//   return "uniplemented"
+// }
 
 
 // Tests for Problem 3
-console.log("Problem 3 Tests running... \n");
+// console.log("Problem 3 Tests running... \n");
 // console.assert(Problem3_tester([1, 2, 3, 4], 1) === '1 -> 3 -> 4 -> null', 'Deleting second value');
 // console.assert(Problem3_tester([1, 2, 3, 4], 2) === '1 -> 2 -> 4 -> null', 'Deleting third value');
 // console.assert(Problem3_tester([1, 2, 3], 1) === '1 -> 3 -> null', 'Deleting middle value');

@@ -39,36 +39,57 @@ class p3Stack extends StackLL {
   }
 }
 
-// class SetOfStacks {
-//   constructor(cap) {
-//     this.capacity = cap;
-//     this.stacks = new StackLL(new p3Stack);
+class SetOfStacks {
+  constructor(cap) {
+    this.capacity = cap;
+    this.stacks = new StackLL(new p3Stack);
 
-//   }
-//   // If the length of the stack is equal to capacity, create a new one
-//   push(val) {
-//     if (this.stacks.top.data.length >= this.capacity) {
-//       let newStack = new p3Stack(val);
-//       this.stacks.push(newStack);
-//     }
-//     else this.stacks.top.data.push(val);
-//   }
-// }
+  }
+  // If the length of the stack is equal to capacity, create a new one
+  push(val) {
+    if (this.stacks.top.data.length >= this.capacity) {
+      let newStack = new p3Stack(val);
+      this.stacks.push(newStack);
+    }
+    else this.stacks.top.data.push(val);
+  }
+  pop() {
+    return "unimplemented"
+  }
+  static fromArray(arr, cap) {
+    return new SetOfStacks(cap)
+  }
+}
 
 // const Problem3 = (n) => {
 //   return "uniplemented"
 // }
 
-// const Problem3_tester = (a, idx) => {
-//   return "uniplemented"
-// }
+/**
+ * 
+ * @param {Array} arr an array of value to add
+ * @param {Number} cap the maximum number if values each stack should hold
+ * @returns whether or not the 
+ */
+const Problem3_tester = (arr, cap) => {
+  
+  let stack = SetOfStacks.fromArray(arr, cap);
+
+  // check push
+  stack.push("test");
+
+  // check pop
+  stack.pop();
+
+  return true
+}
 
 
 // Tests for Problem 3
-// console.log("Problem 3 Tests running... \n");
-// console.assert(Problem3_tester([1, 2, 3, 4], 1) === '1 -> 3 -> 4 -> null', 'Deleting second value');
-// console.assert(Problem3_tester([1, 2, 3, 4], 2) === '1 -> 2 -> 4 -> null', 'Deleting third value');
-// console.assert(Problem3_tester([1, 2, 3], 1) === '1 -> 3 -> null', 'Deleting middle value');
+console.log("Problem 3 Tests running... \n");
+console.assert(Problem3_tester([1, 2, 3, 4], 1) === true, 'Deleting second value');
+console.assert(Problem3_tester([1, 2, 3, 4], 2) === true, 'Deleting third value');
+console.assert(Problem3_tester([1, 2, 3], 1) === true, 'Deleting middle value');
 
 
 

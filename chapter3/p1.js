@@ -1,4 +1,4 @@
-const { StackLL, QueueLL } = require('../lib');
+const { StackLL, QueueLL } = require('../lib/lib.js');
 
 /**
  * class [TriStackArray] is a representation of 3 stacks using an array.

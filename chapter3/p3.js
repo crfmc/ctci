@@ -1,4 +1,4 @@
-const { Node, StackLL } = require('../lib');
+const { Node, StackLL } = require('../lib/lib.js');
 /**
  * Question:
  * Imagine a (literal) stack of plates. If the stack gets too high, 

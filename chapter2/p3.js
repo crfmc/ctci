@@ -1,4 +1,4 @@
-const { Node } = require('../lib');
+const { Node } = require('../lib/lib.js');
 /**
  * Question:
  * Delete Middle Node: Implement an algorithm to delete a node in the middle 

@@ -1,4 +1,4 @@
-const { Node, LLNode, LL } = require('../lib');
+const { Node, LLNode, LL } = require('../lib/lib.js');
 /**
  * Question:
  *  How would you design a stack which, in addition

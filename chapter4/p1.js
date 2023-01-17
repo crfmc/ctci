@@ -17,7 +17,26 @@ const { LLNode, Graph, GraphNode, GraphAL } = require('../lib/lib');
  * runtime and space complexity of this method.
  */
 const Problem1 = (graph, idx1, idx2) => {
-  return graph.BFS(idx1, idx2);
+  return graph.DFS(idx1, idx2);
+}
+
+/**
+ * 
+ * @param { Graph } graph The graph to test
+ * @returns { Boolean } Wether or not the given graph is capable of
+ * returning the correct value for each of its nodes being able to
+ * reach the other reachable nodes.  
+ */
+const P1Tester = (graph) => {
+  let len = graph.nodes.length;
+
+  for (let n1 = 0; n1 < len; n1++) {
+    for (let n2 = 0; n2 < len; n2++) {
+      if (n1 !== n2) {
+        console.assert(Problem1(graph, n1, n2) === true, `Testing Nodes: ${graph.nodeAt(n1).val},  ${graph.nodeAt(n2).val}`);
+      }
+    }
+  }
 }
 
 
@@ -36,6 +55,8 @@ E.addChildGN(C);
 
 let Z = test_graph_0.addNodeWithName("Z");
 
+// P1Tester(test_graph_0);
+
 console.log('Problem 1 tests running... \n');
 console.assert(Problem1(test_graph_0, 0, 0) === true, "search for itself");
 console.assert(Problem1(test_graph_0, 0, 1) === true, "search for child");
@@ -45,17 +66,6 @@ console.assert(Problem1(test_graph_0, 0, 4) === true, "search for child of child
 console.assert(Problem1(test_graph_0, 0, 5) === false, "search for unreachable node");
 console.assert(Problem1(test_graph_0, 1, 2) === false, "search for other child");
 
-
-
-const mh = new MinHeap();
-
-for (i = 10; i <= 150; i = i + 10) {
-  mh.add(i);
-}
-
-mh.add(5, true);
-
-console.log(mh.heap)
 
 module.exports;
 

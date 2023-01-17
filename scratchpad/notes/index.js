@@ -1,0 +1,1 @@
+const setTimeout = require('./setTimeout');

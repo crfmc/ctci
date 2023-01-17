@@ -1,4 +1,8 @@
 // require('./bitwise');
-require('./extras');
+// require('./extras');
+// require('./symbols');
+
+require('./notes');
+
 
 module.exports;

@@ -10,5 +10,8 @@ from the pages of ()[the book].
 
 Some of the problems found in the scratchpad directory are meant
 as additional practice problems found elsewhere, as well as
-explortory code written to investigate topics such as bitwise
-manipulations and JavaScript's wonderful language.
+exploratory code written to investigate topics such as bitwise
+manipulations and other features of JavaScript's wonderful language.
+
+For specific notes, check out the notes folder, which is made up of mostly
+comments about a particular facet of JavaScript.

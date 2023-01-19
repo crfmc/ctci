@@ -1,4 +1,5 @@
 const { LLNode, Graph, GraphNode, GraphAL } = require('../lib/lib');
+const { test_graph_0 } = require('../lib/testing/graphs');
 
 /**
  * Question: Route Between Nodes: Given a directed graph, design 
@@ -21,21 +22,6 @@ const Problem1 = (graph, idx1, idx2) => {
 }
 
 
-
-/**
- * Here I create a graph for Testing
-*/
-// ["A","B","C","D","E","Z"]
-let test_graph_0 = new Graph();
-let A = test_graph_0.addNodeWithName("A");
-let B = test_graph_0.addChildGNodeVal("B", A);
-let C = test_graph_0.addChildGNodeVal("C", A);
-
-let D = test_graph_0.addChildGNodeVal("D", C);
-let E = test_graph_0.addChildGNodeVal("E", D);
-E.addChildGN(C);
-
-let Z = test_graph_0.addNodeWithName("Z");
 
 /**
  * —————UNIFINISHED—————

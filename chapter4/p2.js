@@ -9,9 +9,8 @@ const { test_graph_0 } = require('../lib/testing/graphs');
 
 /**
  * Notes: 
- * Here the question is asking me to create a BST from an array. This should
- * not be complicated, since I already have a class for it which almost 
- * supports bubbling up. It will essentially need to
+ * Here the question is asking me to create a BST from an array. I will
+ * add the method to the BST class and use it here.
  */
 const Problem1 = (graph, idx1, idx2) => {
   return graph.DFS(idx1, idx2);

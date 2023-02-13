@@ -14,7 +14,7 @@ const Problem2 = (a) => {
   return BSTreeNode.fromArray(a);
 }
 
-console.log('Problem 1 tests running... \n');
+console.log('Problem 2 tests running... \n');
 
 // console.assert(Problem1(test_graph_0, 0, 0) === true, "search for itself");
 // console.assert(Problem1(test_graph_0, 0, 1) === true, "search for child");
@@ -25,16 +25,12 @@ console.log('Problem 1 tests running... \n');
 // console.assert(Problem1(test_graph_0, 1, 2) === false, "search for other child");
 
 
-
-let t1 = Problem2([0, 1, 2, 3, 4, 5]);
-let inOrderTrav = "012345";
-let ans = "";
-t1.traversePostOrder(n => ans += n.val);
-console.log(ans)
-// console.assert(inOrderTrav === BSTreeNode.traverseInOrder(t1, (n => ans += n.val)));
-
 module.exports;
 
 /**
- * Notes:
+ * Notes: This problem helped me think about how binary search trees are
+ * created. It begins by taking a middle (average value) element, and
+ * making it the root. We can ensure that the binary search tree has
+ * the minimum depth because we know there are more or the same number
+ * of values going on the left side of the tree as the right.
  */

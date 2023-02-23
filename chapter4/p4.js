@@ -1,5 +1,5 @@
 const { } = require('../lib/lib');
-const { t4 } = require('../lib/testing/binarytrees');
+const { t4, t4_b } = require('../lib/testing/binarytrees');
 
 /**
  * Question: Check balanced: Implement a function to check if a binary tree is balanced.
@@ -43,6 +43,7 @@ const { t4 } = require('../lib/testing/binarytrees');
  * OPT3: traverse tree recursively and check for imbalance. When there is one,
  * if there is one, check if it qualifies and return false if so, otherwise 
  * return true
+ * 
  */
 
 
@@ -73,34 +74,39 @@ const Problem4 = (t) => {
 
   return true && Problem4(t.left) && Problem4(t.right);
 }
-
 /**
- *      1
- *          2
- *              3
+ * After reading the hints #21 and #33 I thought I had a decent
+ * solution. But then, #49 changed my opinion entirely.
+ * This hint suggests modifying the Binary Tree Node class to
+ * allow a node to store the height of its subtree.
+ * 
+ * If I did this, it would allow me to find such a node which
+ * satisfies h(root.left) > h(root.right) + 1.
  */
-
-
 
 /**
  * 
+ * @param {*} t the tree that should be tested
+ * @returns {Boolean} true iff the height of the two subtrees of any
+ * node never differ by more than one.
  */
+const Problem4_b = (t) => {
+  console.log(t)
+  return "unimplemented"
+}
+
+
+
 const Problem4Tester = (t) => {
-  return Problem4(t)
+  return Problem4_b(t)
 }
 
 console.log('Problem 4 tests running... \n');
-console.assert(Problem4Tester(t4[0]) === true, "single node binary tree");
-console.assert(Problem4Tester(t4[1]) === true, "one side null binary tree");
-console.assert(Problem4Tester(t4[2]) === false, "unbalanced on far right");
-console.assert(Problem4Tester(t4[3]) === true, "one side null binary tree depth 2");
-console.assert(Problem4Tester(t4[4]) === false, "unbalanced on far right by 3");
-// console.assert(Problem4Tester() === true, "search for child");
-// console.assert(Problem4Tester() === true, "search for other child");
-// console.assert(Problem4Tester() === true, "search for child of child");
-// console.assert(Problem4Tester() === true, "search for child of child of child");
-// console.assert(Problem4Tester() === false, "search for unreachable node");
-// console.assert(Problem4Tester() === false, "search for other child");
+// console.assert(Problem4Tester(t4_b[0]) === true, "single node binary tree");
+console.assert(Problem4Tester(t4_b[1]) === true, "one side null binary tree");
+// console.assert(Problem4Tester(t4_b[2]) === false, "unbalanced on far right");
+// console.assert(Problem4Tester(t4_b[3]) === true, "one side null binary tree depth 2");
+// console.assert(Problem4Tester(t4_b[4]) === false, "unbalanced on far right by 3");
 
 
 

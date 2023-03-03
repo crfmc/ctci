@@ -6,6 +6,73 @@ console.log("Problem 1 Tests running... \n");
 // What if you cannot use additional data structures ?
 
 /**
+ * Redo of p1.
+ * Throw everything in a map and if you encounter a char that already
+ * exists return true.
+ */
+const Problem1_r0 = (s) => {
+  const chars = new Map();
+  
+  for (let c of s) {
+    // If character already exists in map, it is a duplicate
+    if (chars.has(c)) return false
+    chars.set(c, 1);
+  }
+
+  return true
+}
+
+/**
+ * Redo of p1b, with no additional data structures.
+ * If we cannot use a map, we cannot store information
+ * about the values we have seen so far. Therefore,
+ * we will need to loop through the string and search
+ * for duplicates.
+ * 
+ * 
+ * I can't imagine a better runtime. I must check each
+ * letter because the duplicates could be the last two 
+ * characters.
+ * 
+ * Two check to be made:
+ * - If the length of the string is less than 2 it cannot
+ * have duplicates by definition of duplicate.
+ * - If the character space is only ASCII characters,
+ * then it is not possible to have a string longer 
+ * than 128 characters without repeating any.
+ */
+
+const Problem1b_r0 = (s) => {
+  if (s.length < 2) return true
+  if (s.length > 128) return false // Assumes ASCII character space
+
+  for (let c0 in s) {
+    for (let c1 in s) {
+      if (c0 !== c1) { // different index
+        if (s[c0] === s[c1]) return false
+      }
+    }
+  }
+  
+  return true
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
  * Notes:
  * - Burte force method is to check each character in the string and compare
  *   it to the others until i find a repeat, this is O(n^2) because I would
@@ -34,13 +101,13 @@ const Problem1 = (s) => {
 }
 
 
-console.assert(Problem1('') === true, "empty string");
-console.assert(Problem1('hi') === true, "string `hi`");
-console.assert(Problem1('h') === true, "string `h`");
+console.assert(Problem1_r0('') === true, "empty string");
+console.assert(Problem1_r0('hi') === true, "string `hi`");
+console.assert(Problem1_r0('h') === true, "string `h`");
 
-console.assert(Problem1('  ') === false, "two spaces");
-console.assert(Problem1('abcc') === false, "string `abcc`");
-console.assert(Problem1('hello') === false, "string `hello`");
+console.assert(Problem1_r0('  ') === false, "two spaces");
+console.assert(Problem1_r0('abcc') === false, "string `abcc`");
+console.assert(Problem1_r0('hello') === false, "string `hello`");
 
 // Same as above, but without additional data structures
 // worst case O(n^2), best case O(n)
@@ -63,13 +130,13 @@ const Problem1b = (s) => {
 
 console.log('Problem 1b tests running... \n');
 
-console.assert(Problem1b('') === true, "empty string");
-console.assert(Problem1b('hi') === true, "string `hi`");
-console.assert(Problem1b('h') === true, "string `h`");
+console.assert(Problem1b_r0('') === true, "empty string");
+console.assert(Problem1b_r0('hi') === true, "string `hi`");
+console.assert(Problem1b_r0('h') === true, "string `h`");
 
-console.assert(Problem1b('  ') === false, "two spaces");
-console.assert(Problem1b('abcc') === false, "string `abcc`");
-console.assert(Problem1b('hello') === false, "string `hello`");
+console.assert(Problem1b_r0('  ') === false, "two spaces");
+console.assert(Problem1b_r0('abcc') === false, "string `abcc`");
+console.assert(Problem1b_r0('hello') === false, "string `hello`");
 
 
 module.exports;
